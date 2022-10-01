@@ -9,6 +9,9 @@ int main(int argc, char **argv) {
 
     SDL_Window *window = renderInit();
 
+    SpriteSheet playerSprites;
+    render_spriteSheetInit(&playerSprites, "Assets/reimu.qoi", 24, 32);
+
     bool running = true;
     while (running) {
         SDL_Event event;
@@ -23,8 +26,10 @@ int main(int argc, char **argv) {
         }
 
         renderBegin();
-        // Do rendering
-        renderEnd(window);
+
+        render_spriteSheetFrame(&playerSprites, 4, 0, (vec2) {50, 300});
+
+        renderEnd(window, playerSprites.textureId);
     }
 
     SDL_DestroyWindow(window);

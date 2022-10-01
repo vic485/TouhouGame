@@ -15,5 +15,8 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
 add_executable(TouhouGame main.c
-        engine/Render/render.c)
-target_link_libraries(TouhouGame ${SDL2_LIBRARY} glad logc)
+        engine/ArrayList/ArrayList.c
+        engine/IO/io.c
+        engine/Render/render.c
+        engine/Render/render_init.c)
+target_link_libraries(TouhouGame ${SDL2_LIBRARY} glad linmath logc m qoi)
