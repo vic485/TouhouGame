@@ -1,14 +1,13 @@
 #include <stdbool.h>
 
-#ifdef _WIN32
-#include <SDL.h>
-#else
-#include <SDL2/SDL.h>
-#endif
+#include "engine/render.h"
+#include "engine/util.h"
 
 int main(int argc, char **argv) {
-    SDL_Window *window = SDL_CreateWindow("くそゲーム", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
+    FILE *logFile = fopen("log.txt", "w");
+    log_add_fp(logFile, LOG_DEBUG);
+
+    SDL_Window *window = renderInit();
 
     bool running = true;
     while (running) {
@@ -23,12 +22,14 @@ int main(int argc, char **argv) {
             }
         }
 
-        SDL_RenderPresent(renderer);
+        renderBegin();
+        // Do rendering
+        renderEnd(window);
     }
 
-    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
 
+    fclose(logFile);
     return 0;
 }

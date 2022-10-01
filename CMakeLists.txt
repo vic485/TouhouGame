@@ -5,6 +5,7 @@ set(CMAKE_C_STANDARD 99)
 
 # External dependencies
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
+add_subdirectory(externals)
 
 # SDL2 Loading
 if (WIN32) # Windows uses local dependencies
@@ -13,5 +14,6 @@ endif ()
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
-add_executable(TouhouGame main.c)
-target_link_libraries(TouhouGame ${SDL2_LIBRARY})
+add_executable(TouhouGame main.c
+        engine/Render/render.c)
+target_link_libraries(TouhouGame ${SDL2_LIBRARY} glad logc)
